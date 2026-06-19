@@ -8,9 +8,18 @@ import { TreasuryModule } from './modules/treasury/treasury.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { AiModule } from './modules/ai/ai.module';
 import { ReportingModule } from './modules/reporting/reporting.module';
+import { ConfigModule } from '@nestjs/config';
+import { validateEnv } from './common/env.validation';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validate: () => {
+        validateEnv();
+        return true;
+      },
+    }),
     AccountingModule,
     TreasuryModule,
     AnalyticsModule,
